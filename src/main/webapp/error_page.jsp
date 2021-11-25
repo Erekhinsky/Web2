@@ -10,10 +10,10 @@
 <body>
 <div id="notfound">
     <div class="notfound">
-        <div class="notfound-404"><h1>404</h1></div>
         <h2>Ничего не найдено</h2>
         <p>Страница, которую вы запрашиваете, отсутствует, проверьте url-адрес.<br/>
-            <a href="app">Вернуться на домашнюю страницу</a></p>
+            <a href="/Web2-1">Вернуться на домашнюю страницу</a></p>
+        <img src="images/baby-yoda-cute.png" width="505">
     </div>
 </div>
 </body>

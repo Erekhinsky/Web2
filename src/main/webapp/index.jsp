@@ -34,7 +34,7 @@
 <table id="mainTable" class="shaded">
     <tr height="400px">
         <td>
-            <form method="get" action="/Web2-1/">
+            <form method="get" action="/Web2-1">
                 <table id="interaction-table" width="500x400">
                     <tr>
                         <td>

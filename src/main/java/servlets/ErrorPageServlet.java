@@ -9,6 +9,6 @@ import java.io.IOException;
 public class ErrorPageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/error.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/error_page.jsp").forward(req, resp);
     }
 }

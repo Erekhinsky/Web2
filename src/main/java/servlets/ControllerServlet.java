@@ -13,7 +13,7 @@ public class ControllerServlet extends HttpServlet {
         if (req.getParameter("x") != null && req.getParameter("y") != null && req.getParameter("r") != null) {
             System.out.println("AreaCheck complete");
             getServletContext().getRequestDispatcher("/checker").forward(req, resp);
-        } else if (req.getParameter("Clear") != null && req.getParameter("Clear").equals("true")) {
+        } else if (req.getParameter("clear") != null && req.getParameter("clear").equals("true")) {
             System.out.println("Clear complete");
             getServletContext().getRequestDispatcher("/clear").forward(req, resp);
         } else {

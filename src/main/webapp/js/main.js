@@ -20,21 +20,6 @@ $(function () {
         }
     }
 
-    // document.addEventListener("DOMContentLoaded", () => {
-    //     let buttons = document.querySelectorAll($("input[type='button'].illuminated-animated"));
-    //     buttons.forEach(click);
-    //
-    //     function click(element) {
-    //         element.onclick = function () {
-    //             y = this.value;
-    //             buttons.forEach(function (element) {
-    //                 element.style.backgroundColor = "black";
-    //             });
-    //             this.style.backgroundColor = "#f41c52";
-    //             this.style.color = "white";
-    //         }
-    //     }
-    // });
     $("input[type='button'].illuminated-animated").click(function (event) {
         let buttons = document.querySelectorAll("input[type='button'].illuminated-animated");
         y = $(this).val();
@@ -43,19 +28,12 @@ $(function () {
             element.style.backgroundColor = null;
             element.style.color = null;
         });
-        $(this).css({ "backgroundColor": "#f41c52", "color": "white" });
+        $(this).css({ "backgroundColor": "#837666", "color": "white" });
         // $(this).style.backgroundColor = "#f41c52";
         // $(this).style.color = "white";
     })
 
-
-
-    // $('input[name="y"]').click(function () {
-    //     $('input[name="true-y"]').val($(this).val());      //костыль
-    // })
-
     $(".rb").click(function () {
-        alert("CLICKED R");
         redrawPoints();
     });
 
@@ -137,12 +115,17 @@ $(function () {
         }
     });
 
-    $("button[type='reset']").click(function () {
+    $("input[type='reset']").click(function () {
         let reset = $("input[type='checkbox']");
         if (reset.hasClass("rb")) {
             reset.removeClass("rb");
             $("#R-table-value").removeClass("ready");
         }
+        // document.getElementById('outputTable').getElementsByTagName("tbody")[0].innerHTML = document.getElementById("outputTable").rows[0].innerHTML;
+        // document.getElementById("X-table").value = "";
+        // document.querySelector("#X-table").removeClass('text-error');
+        // document.querySelectorAll('input[type="checkbox"]').forEach(r => r.checked = false);
+        // document.getElementById(("Y-table").value.backgroundColor = null);
         clearTable();
     })
 
@@ -223,7 +206,7 @@ $(function () {
             let cY = 150 - y * 120 / r;
             svg.insertAdjacentHTML("beforeend", `<circle r="5" cx="${cX}" cy="${cY}" fill-opacity="0.7" fill="red" stroke="firebrick"></circle>`);
         });
-        
+
         /*
         $("#outputTable tbody tr").each(function (row) {
             alert($("#outputTable tbody tr"));
