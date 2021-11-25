@@ -65,7 +65,6 @@ $(function () {
         const MAX_X = 5;
         if (x > MIN_X && x < MAX_X) {
             $("input[type='text']").removeClass('text-error');
-            alert("X");
             return true;
         } else {
             $("input[type='text']").addClass('text-error');
@@ -77,7 +76,6 @@ $(function () {
         let valY = $("input[type='button']");
         if (valY.click) {
             $(valY.removeClass("button-error"));
-            alert("Y");
             return true;
         } else {
             $(".input-button").addClass("button-error");
@@ -91,7 +89,6 @@ $(function () {
         if (!ready) {
             rTableValue.addClass("buttons-error");
         } else {
-            alert("R");
             rTableValue.removeClass("buttons-error");
         }
         return ready;
@@ -197,8 +194,6 @@ $(function () {
     function drawPoints() {
         $("circle").remove();
         document.querySelectorAll("#outputTable tbody tr").forEach(function (row) {
-            // alert($("#outputTable tbody tr"));
-            // alert(row);
             let x = parseFloat(row.cells[0].innerText);
             let y = parseFloat(row.cells[1].innerText);
             let r = parseFloat(row.cells[2].innerText);
