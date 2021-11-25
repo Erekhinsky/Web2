@@ -1,8 +1,10 @@
 $(function () {
 
+    let y;
+
     function getX() {
-        let x = $("input[name='x-value']").val();
-        let regex = /^[+-]?[0-9]{1,10}([.]?[0-9]{1,10})?$/;
+        let x = $("input[name='x']").val();
+        let regex = /^[+-]?[0-9]{1,10}([.,]?[0-9]{1,10})?$/;
         if (x.match(regex)) {
             return parseFloat(x);
         } else {
@@ -12,17 +14,70 @@ $(function () {
 
     function getY() {
         if ($("#Y-table").hasClass("ready")) {
-            return parseFloat($("button[type='button'].selected-y").val());
+            return y;         //fixed
         } else {
             return NaN;
         }
     }
 
+    // document.addEventListener("DOMContentLoaded", () => {
+    //     let buttons = document.querySelectorAll($("input[type='button'].illuminated-animated"));
+    //     buttons.forEach(click);
+    //
+    //     function click(element) {
+    //         element.onclick = function () {
+    //             y = this.value;
+    //             buttons.forEach(function (element) {
+    //                 element.style.backgroundColor = "black";
+    //             });
+    //             this.style.backgroundColor = "#f41c52";
+    //             this.style.color = "white";
+    //         }
+    //     }
+    // });
+    $("input[type='button'].illuminated-animated").click(function (event) {
+        let buttons = document.querySelectorAll("input[type='button'].illuminated-animated");
+        y = $(this).val();
+        buttons.forEach(function (element) {
+            element.style.boxShadow = null;
+            element.style.backgroundColor = null;
+            element.style.color = null;
+        });
+        $(this).css({ "backgroundColor": "#f41c52", "color": "white" });
+        // $(this).style.backgroundColor = "#f41c52";
+        // $(this).style.color = "white";
+    })
+
+
+
+    // $('input[name="y"]').click(function () {
+    //     $('input[name="true-y"]').val($(this).val());      //костыль
+    // })
+
+    $(".rb").click(function () {
+        alert("CLICKED R");
+        redrawPoints();
+    });
+
     function getR() {
-        if ($("#R-table-value").hasClass("ready")) {
-            return parseFloat($("button[type='button'].selected-r").val());
+        // if ($("#R-table-value").hasClass("ready")) {
+        //     return parseFloat($("input[type='checkbox']").val());
+        // } else {
+        //     return NaN;
+        // }
+
+        let checked = document.getElementsByClassName('rb');
+        let r = 0;
+        for (let el = 0; checked[el]; el++) {
+            if (checked[el].checked) {
+                r += Number(checked[el].value);
+            }
+        }
+        if (r <= 0 || r > 15) {
+            alert("Значение R не выбрано");
+            return NaN
         } else {
-            return NaN;
+            return r;
         }
     }
 
@@ -32,6 +87,7 @@ $(function () {
         const MAX_X = 5;
         if (x > MIN_X && x < MAX_X) {
             $("input[type='text']").removeClass('text-error');
+            alert("X");
             return true;
         } else {
             $("input[type='text']").addClass('text-error');
@@ -40,8 +96,10 @@ $(function () {
     }
 
     function validateY() {
-        if ($("input[type='button']").is(":checked")) {
-            $(".input-button").removeClass("button-error");
+        let valY = $("input[type='button']");
+        if (valY.click) {
+            $(valY.removeClass("button-error"));
+            alert("Y");
             return true;
         } else {
             $(".input-button").addClass("button-error");
@@ -50,11 +108,13 @@ $(function () {
     }
 
     function validateR() {
-        let ready = $("#R-table-value").hasClass("ready");
+        let rTableValue = $('#R-table-value');
+        let ready = rTableValue.hasClass("ready");
         if (!ready) {
-            $("#R-table-value").addClass("buttons-error");
+            rTableValue.addClass("buttons-error");
         } else {
-            $("#R-table-value").removeClass("buttons-error");
+            alert("R");
+            rTableValue.removeClass("buttons-error");
         }
         return ready;
     }
@@ -66,20 +126,21 @@ $(function () {
         return x && y && r;
     }
 
-    $("button[type='checkbox']").click(function () {
-        if ($(this).hasClass("selected-r")) {
-            $(this).removeClass("selected-r");
-            $("#r-buttons").removeClass("ready");
+    $("input[type='chekbox']").click(function () {
+        if ($(this).hasClass("rb")) {
+            $(this).removeClass("rb");
+            $("#R-table-value").removeClass("ready");
         } else {
-            $(this).addClass("selected-r");
-            $(this).siblings("button.selected-r").removeClass("selected-r");
-            $("#r-buttons").addClass("ready");
+            $(this).addClass("rb");
+            $(this).siblings("input[type='checkbox'].rb").removeClass("rb");
+            $("#R-table-value").addClass("ready");
         }
     });
 
     $("button[type='reset']").click(function () {
-        if ($("button[type='checkbox']").hasClass("selected-r")) {
-            $("button[type='checkbox']").removeClass("selected-r");
+        let reset = $("input[type='checkbox']");
+        if (reset.hasClass("rb")) {
+            reset.removeClass("rb");
             $("#R-table-value").removeClass("ready");
         }
         clearTable();
@@ -87,11 +148,11 @@ $(function () {
 
     function clearTable() {
         $.ajax({
-            url: "controller",
+            url: "/Web2-1/app",
             type: "GET",
             data: {clear: "true"},
             success: function (data) {
-                $("table").html(data);
+                $("#outputTable").html(data);
                 drawPoints();
             }
         });
@@ -101,41 +162,101 @@ $(function () {
         event.preventDefault();
         if (validateData()) {
             requestWithArgs(getX(), getY());
-        }
+        } else alert("Проверьте введенные значения")
     })
+
 
     function requestWithArgs(xArg, yArg) {
         $.ajax({
-            url: "controller",
+            url: "/Web2-1/app",
             type: "GET",
             data: {x: xArg, y: yArg, r: getR()},
             success: function (data) {
-                $("table").html(data);
+                $("#outputTable").html(data);
                 drawPoints();
             }
         });
     }
 
+    // let svg = document.querySelector("svg");
+    // $("svg").click(function (event) {
+    //     if ($("#R-table-value").hasClass("ready")) {
+    //         let position = getMousePosition(svg, event)
+    //         let x = position.x;
+    //         let y = position.y;
+    //         setPointer(position.x_draw, position.y_draw);
+    //         let k = 120/getR(); //отношение радиуса и плоскости
+    //         x = (x / k).toFixed(1);
+    //         y = (y / k).toFixed(1);
+    //         requestWithArgs(x,y);
+    //     } else {
+    //         alert("Choose R value.");
+    //     }
+    // })
+    //
+    // function getMousePosition(svg, event) {
+    //     let rect = svg.getBoundingClientRect();
+    //     return {
+    //         x: event.clientX - (rect.left+150),
+    //         y: (event.clientY - (rect.top+150))*-1,
+    //         x_draw: event.clientX - rect.left,
+    //         y_draw: event.clientY - rect.top
+    //     };
+    // }
+    //
+    // function setPointer(x, y) {
+    //     console.log(x + " " + y);
+    //     svg.insertAdjacentHTML("beforeend", `<circle r="5" cx="${x}" cy="${y}" fill-opacity="0.7" fill="red" stroke="firebrick"></circle>`);
+    // }
+
+    let svg = document.querySelector("svg");
+
+    function drawPoints() {
+        $("circle").remove();
+        document.querySelectorAll("#outputTable tbody tr").forEach(function (row) {
+            // alert($("#outputTable tbody tr"));
+            // alert(row);
+            let x = parseFloat(row.cells[0].innerText);
+            let y = parseFloat(row.cells[1].innerText);
+            let r = parseFloat(row.cells[2].innerText);
+            let cX = 150 + x * 120 / r;
+            let cY = 150 - y * 120 / r;
+            svg.insertAdjacentHTML("beforeend", `<circle r="5" cx="${cX}" cy="${cY}" fill-opacity="0.7" fill="red" stroke="firebrick"></circle>`);
+        });
+        
+        /*
+        $("#outputTable tbody tr").each(function (row) {
+            alert($("#outputTable tbody tr"));
+            alert(row);
+            let x = parseFloat(row.cells[0].innerText);
+            let y = parseFloat(row.cells[1].innerText);
+            let r = parseFloat(row.cells[2].innerText);
+            let cX = 150 + x * 120 / r;
+            let cY = 150 - y * 120 / r;
+            svg.insertAdjacentHTML("beforeend", `<circle r="5" cx="${cX}" cy="${cY}" fill-opacity="0.7" fill="red" stroke="firebrick"></circle>`);
+        })*/
+    }
+
+    function redrawPoints() {
+        $("circle").remove();
+        document.querySelectorAll("#outputTable tbody tr").forEach(function (row) {
+            let x = parseFloat(row.cells[0].innerText);
+            let y = parseFloat(row.cells[1].innerText);
+            let r = getR();
+            let cX = 150 + x * 120 / r;
+            let cY = 150 - y * 120 / r;
+            svg.insertAdjacentHTML("beforeend", `<circle r="5" cx="${cX}" cy="${cY}" fill-opacity="0.7" fill="red" stroke="firebrick"></circle>`);
+        });
+    }
+
     $("svg").click(function (e) {
-        if ($("#r-buttons").hasClass("ready")) {
-            let x = (e.offsetX - 193) * getR() / 140;
-            let y = (193 - e.offsetY) * getR() / 140;
+        if ($("#R-table-value").hasClass("ready")) {
+            let x = (e.offsetX - 150) * getR() / 120;
+            let y = (150 - e.offsetY) * getR() / 120;
             requestWithArgs(x.toFixed(1), y.toFixed(1));
         } else {
             alert("Choose R value.");
         }
     })
 
-    function drawPoints() {
-        $("circle").remove();
-        $("table tbody tr").each(function (row) {
-            let x = parseFloat(row.cells[0].innerText);
-            let y = parseFloat(row.cells[1].innerText);
-            let r = parseFloat(row.cells[2].innerText);
-            let cX = 150 + x * 120 / r;
-            let cY = 150 - y * 120 / r;
-            $("svg").append(`<circle r="4" cx=${cX} cy=${cY} fill="black"
-                fill-opacity="0.85"></circle>`);
-        })
-    }
 });

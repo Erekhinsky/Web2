@@ -34,7 +34,7 @@
 <table id="mainTable" class="shaded">
     <tr height="400px">
         <td>
-            <form>
+            <form method="get" action="/Web2-1/">
                 <table id="interaction-table" width="500x400">
                     <tr>
                         <td>
@@ -45,8 +45,8 @@
                                             <label for="x">
                                                 Введите X:
                                             </label>
-                                            <input id="x" required name="X-input" type="text"
-                                                   placeholder="значение в промежутке (-3 до 5)" maxlength="6"
+                                            <input id="x" name="x" required type="text"
+                                                   placeholder="X ∈ (-3;5)" maxlength="6"
                                                    size="15">
                                         </fieldset>
                                     </td>
@@ -54,40 +54,41 @@
                                 <tr>
                                     <td>
                                         <fieldset>
-                                            <table id="Y-table">
+                                            <table id="Y-table" class="ready">
                                                 <tr>
                                                     <td rowspan="3">Выберите Y:</td>
-                                                    <td><input name="Y-button" class="illuminated animated"
+                                                    <td><input name="y" class="illuminated-animated"
                                                                type="button"
                                                                value="-2.0"></td>
-                                                    <td><input name="Y-button" class="illuminated animated"
+                                                    <td><input name="y" class="illuminated-animated"
                                                                type="button"
                                                                value="-1.5"></td>
-                                                    <td><input name="Y-button" class="illuminated animated"
+                                                    <td><input name="y" class="illuminated-animated"
                                                                type="button"
                                                                value="-1.0"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><input name="Y-button" class="illuminated animated"
+                                                    <td><input name="y" class="illuminated-animated"
                                                                type="button"
                                                                value="-0.5"></td>
-                                                    <td><input name="Y-button" class="illuminated animated"
+                                                    <td><input name="y" class="illuminated-animated"
                                                                type="button"
                                                                value="0"></td>
-                                                    <td><input name="Y-button" class="illuminated animated"
+                                                    <td><input name="y" class="illuminated-animated"
                                                                type="button"
                                                                value="0.5"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><input name="Y-button" class="illuminated animated"
+                                                    <td><input name="y" class="illuminated-animated"
                                                                type="button"
-                                                               value="1"></td>
-                                                    <td><input name="Y-button" class="illuminated animated"
+                                                               value="1.0"></td>
+                                                    <td><input name="y" class="illuminated-animated"
                                                                type="button"
                                                                value="1.5"></td>
-                                                    <td><input name="Y-button" class="illuminated animated"
+                                                    <td><input name="y" class="illuminated-animated"
                                                                type="button"
-                                                               value="2"></td>
+                                                               value="2.0"></td>
+                                                    <td><input name="true-y" type="hidden"></td>
                                                 </tr>
                                             </table>
                                         </fieldset>
@@ -99,41 +100,41 @@
                                             <table id="R-table">
                                                 <tr>
                                                     <td>
-                                                        <table id="R-table-value">
+                                                        <table id="R-table-value" class="ready">
                                                             <tr>
                                                                 <td>
                                                                     Выберите R:
                                                                 </td>
                                                                 <td>
                                                                     1<label for="r_1"></label><input type="checkbox"
-                                                                                                     name="radius"
+                                                                                                     name="r"
                                                                                                      autocomplete="off"
                                                                                                      class="rb" id="r_1"
                                                                                                      value="1">
                                                                 </td>
                                                                 <td>
                                                                     2<label for="r_2"></label><input type="checkbox"
-                                                                                                     name="radius"
+                                                                                                     name="r"
                                                                                                      class="rb"
                                                                                                      autocomplete="off"
                                                                                                      id="r_2" value="2">
                                                                 </td>
                                                                 <td>
                                                                     3<label for="r_3"></label><input type="checkbox"
-                                                                                                     name="radius"
+                                                                                                     name="r"
                                                                                                      class="rb" id="r_3"
                                                                                                      autocomplete="off"
                                                                                                      value="3">
                                                                 </td>
                                                                 <td>
                                                                     4<label for="r_4"></label><input type="checkbox"
-                                                                                                     name="radius"
+                                                                                                     name="r"
                                                                                                      class="rb" id="r_4"
                                                                                                      value="4"
                                                                                                      autocomplete="off">
                                                                 <td>
                                                                     5<label for="r_5"></label><input type="checkbox"
-                                                                                                     name="radius"
+                                                                                                     name="r"
                                                                                                      class="rb" id="r_5"
                                                                                                      value="5"
                                                                                                      autocomplete="off">
@@ -153,7 +154,8 @@
                                 <table id="check-table">
                                     <tr>
                                         <td>
-                                            <input id="checkButton" class="input-button" type="submit" value="Отправить"/>
+                                            <input id="checkButton" class="input-button" type="submit"
+                                                   value="Отправить"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -207,12 +209,16 @@
 
                             <polygon points="150,150 150,30 30,30 30,150" fill-opacity="0.4" fill="b1b28f"></polygon>
                             <polygon points="150,150 210,150 150,270" fill-opacity="0.4" fill="b1b28f"></polygon>
-                            <path d="M150 150 L 210 150 C 220 130 200 80 150 90 L Z" fill-opacity="0.4" fill="b1b28f"></path>
+                            <path d="M150 150 L 210 150 C 220 130 200 80 150 90 L Z" fill-opacity="0.4"
+                                  fill="b1b28f"></path>
+                            <circle id="pointer" r="4" cx="150" cy="150" fill-opacity="0.7" fill="green"
+                                    stroke="green" visibility="hidden"></circle>
                             <%
                                 for (Result result : results) {
                             %>
-                            <circle id="pointer" r="4" cx="150" cy="150" fill-opacity="0.7" fill="green"
-                                    stroke="green" visibility="hidden"></circle>
+                            <circle r="4" cx="<%=150 + Math.round(120 * result.getX() / result.getR())%>"
+                                    cy="<%=150 - Math.round(120 * result.getY() / result.getR())%>" fill="green"
+                                    fill-opacity="0.85"></circle>
                             <%
                                 }
                             %>
@@ -224,9 +230,7 @@
         <td>
             <img src="images/baby-yoda-spec.png" alt="baby-yoda-cute" width="300x300" align="left">
         </td>
-        <td width="200px">
-
-        </td>
+        <td width="200px"></td>
     </tr>
     <tr>
         <td colspan="3">
@@ -269,16 +273,17 @@
         </td>
     </tr>
 </table>
-<script>
-    let request = "x=0" + "&y=0" + "&r=0" + "&key=update";
-    fetch("app", {
-        method: "POST",
-        headers: {"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"},
-        body: request
-    }).then(response => response.text()).then(function (serverAnswer) {
-        document.getElementById("outputContainer").innerHTML = serverAnswer;
-    }).catch(err => createNotification(`Ошибка HTTP ${err.textContent}. Повторите попытку позже.`));
-</script>
+<%--<script>--%>
+<%--    let request = "x=0" + "&y=0" + "&r=0";--%>
+<%--    fetch("app", {--%>
+<%--        method: "GET",--%>
+<%--        headers: {"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"},--%>
+<%--        body: request--%>
+<%--    }).then(response => response.text()).then(function (serverAnswer) {--%>
+<%--        document.getElementById("outputTable").innerHTML = serverAnswer;--%>
+<%--    }).catch(err => createNotification(`Ошибка HTTP ${err.textContent}. Повторите попытку позже.`));   --%>
+<%--</script>--%>
+<script src="js/jquery.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

@@ -8,23 +8,23 @@ public class ControllerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("Enter Control");
+        System.out.println(req.getParameter("x") + " " + req.getParameter("y") + " "  + req.getParameter("r"));
         if (req.getParameter("x") != null && req.getParameter("y") != null && req.getParameter("r") != null) {
-            getServletContext().getRequestDispatcher("AreaChecker").forward(req, resp);
+            System.out.println("AreaCheck complete");
+            getServletContext().getRequestDispatcher("/checker").forward(req, resp);
         } else if (req.getParameter("Clear") != null && req.getParameter("Clear").equals("true")) {
+            System.out.println("Clear complete");
             getServletContext().getRequestDispatcher("/clear").forward(req, resp);
         } else {
-            getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+            System.out.println("index.jsp complete");
+            getServletContext().getRequestDispatcher("/error_page.jsp").forward(req, resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("key").equals("update")) {
-            getServletContext().getNamedDispatcher("AreaChecker").forward(req, resp);
-        }
-        else{
-            req.getServletContext().getNamedDispatcher("Controller").forward(req, resp);
-        }
+            getServletContext().getNamedDispatcher("/error_page.jsp").forward(req, resp);
     }
 
     @Override
